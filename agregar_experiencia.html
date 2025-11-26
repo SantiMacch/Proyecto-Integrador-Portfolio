@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Agregar Experiencia</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <h1>Agregar Experiencia</h1>
+    <form method="POST" action="{{ url_for('agregar_experiencia') }}">
+        <label for="puesto">Puesto:</label>
+        <input type="text" id="puesto" name="puesto" required><br><br>
+
+        <label for="empresa">Empresa:</label>
+        <input type="text" id="empresa" name="empresa" required><br><br>
+
+        <label for="fecha_inicio">Fecha de Inicio:</label>
+        <input type="date" id="fecha_inicio" name="fecha_inicio" required><br><br>
+
+        <label for="fecha_fin">Fecha de Fin:</label>
+        <input type="date" id="fecha_fin" name="fecha_fin" required><br><br>
+
+        <label for="descripcion">Descripción:</label>
+        <textarea id="descripcion" name="descripcion" required></textarea><br><br>
+
+        <button type="submit">Agregar</button>
+    </form>
+    <a href="{{ url_for('index') }}">Volver al inicio</a>
+</body>
+</html>

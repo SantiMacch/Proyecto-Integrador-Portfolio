@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mi Portfolio</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <h1>Mi Portfolio</h1>
+        <nav>
+            <a href="#acerca-de">Acerca de</a>
+            <a href="#experiencia">Experiencia</a>
+            <a href="#educacion">Educación</a>
+            <a href="#skills">Habilidades</a>
+            <a href="#proyectos">Proyectos</a>
+        </nav>
+    </header>
+
+    <main>
+        <section id="banner" class="banner">
+            <img src="/static/img/foto_perfil.jpeg" alt="Foto de perfil" style="width: 150px; height: 150px; border-radius: 50%;">
+            <h2>{{ info_personal.nombre }} {{ info_personal.apellido }}</h2>
+            <p>{{ info_personal.titulo }}</p>
+        </section>
+
+        <section id="acerca-de" class="seccion">
+            <h2>Acerca de mí <a href="{{ url_for('editar_acerca_de', id=info_personal.id) }}">Editar</a></h2>
+            <p>{{ info_personal.descripcion }}</p>
+        </section>
+
+        <section id="experiencia" class="seccion">
+            <h2>Experiencia <a href="{{ url_for('agregar_experiencia') }}">Agregar Experiencia</a></h2>
+            {% for exp in experiencia %}
+            <div class="experiencia-item">
+                <h3>{{ exp.puesto }}</h3>
+                <p><strong>Empresa:</strong> {{ exp.empresa }}</p>
+                <p><strong>Fecha:</strong> {{ exp.fecha_inicio }} - {{ exp.fecha_fin }}</p>
+                <p><strong>Descripción:</strong> {{ exp.descripcion }}</p>
+                <a href="{{ url_for('editar_experiencia', id=exp.id) }}">Editar</a>
+                <a href="{{ url_for('borrar_experiencia', id=exp.id) }}">Borrar</a>
+            </div>
+            {% endfor %}
+        </section>
+
+        <section id="educacion" class="seccion">
+            <h2>Educación <a href="{{ url_for('agregar_educacion') }}">Agregar Educación</a></h2>
+            {% for edu in educacion %}
+            <div class="educacion-item">
+                <h3>{{ edu.titulo }}</h3>
+                <p><strong>Institución:</strong> {{ edu.institucion }}</p>
+                <p><strong>Fecha:</strong> {{ edu.fecha_inicio }} - {{ edu.fecha_fin }}</p>
+                <a href="{{ url_for('editar_educacion', id=edu.id) }}">Editar</a>
+                <a href="{{ url_for('borrar_educacion', id=edu.id) }}">Borrar</a>
+            </div>
+            {% endfor %}
+        </section>
+
+        <section id="skills" class="seccion">
+            <h2>Habilidades <a href="{{ url_for('agregar_habilidad') }}">Agregar Habilidad</a></h2>
+            <div class="skills-container">
+                <div class="hard-skills">
+                    <h3>Habilidades duras</h3>
+                    <ul>
+                        {% for skill in habilidades_duras %}
+                        <li>
+                            {{ skill.nombre }}
+                            {% for i in range(skill.nivel) %}
+                                <i class="fas fa-star"></i>
+                            {% endfor %}
+                            <a href="{{ url_for('editar_habilidad', id=skill.id) }}">Editar</a>
+                            <a href="{{ url_for('borrar_habilidad', id=skill.id) }}">Borrar</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="soft-skills">
+                    <h3>Habilidades blandas</h3>
+                    <ul>
+                        {% for skill in habilidades_blandas %}
+                        <li>
+                            {{ skill.nombre }}
+                            {% for i in range(skill.nivel) %}
+                                <i class="fas fa-star"></i>
+                            {% endfor %}
+                            <a href="{{ url_for('editar_habilidad', id=skill.id) }}">Editar</a>
+                            <a href="{{ url_for('borrar_habilidad', id=skill.id) }}">Borrar</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="proyectos" class="seccion">
+            <h2>Proyectos <a href="{{ url_for('agregar_proyecto') }}">Agregar Proyecto</a></h2>
+            {% for proyecto in proyectos %}
+            <div class="proyecto-item">
+                <h3>{{ proyecto.nombre }}</h3>
+                <p><strong>Descripción:</strong> {{ proyecto.descripcion }}</p>
+                <p><strong>Fecha:</strong> {{ proyecto.fecha }}</p>
+                <p><a href="{{ proyecto.enlace }}" target="_blank">Ver proyecto</a></p>
+                <a href="{{ url_for('editar_proyecto', id=proyecto.id) }}">Editar</a>
+                <a href="{{ url_for('borrar_proyecto', id=proyecto.id) }}">Borrar</a>
+            </div>
+            {% endfor %}
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 Mi Portfolio</p>
+    </footer>
+</body>
+</html>

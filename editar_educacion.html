@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Editar Educación</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <h1>Editar Educación</h1>
+    <form method="POST" action="{{ url_for('editar_educacion', id=educacion.id) }}">
+        <label for="titulo">Título:</label>
+        <input type="text" id="titulo" name="titulo" value="{{ educacion.titulo }}" required><br><br>
+
+        <label for="institucion">Institución:</label>
+        <input type="text" id="institucion" name="institucion" value="{{ educacion.institucion }}" required><br><br>
+
+        <label for="fecha_inicio">Fecha de Inicio:</label>
+        <input type="date" id="fecha_inicio" name="fecha_inicio" value="{{ educacion.fecha_inicio }}" required><br><br>
+
+        <label for="fecha_fin">Fecha de Fin:</label>
+        <input type="date" id="fecha_fin" name="fecha_fin" value="{{ educacion.fecha_fin }}" required><br><br>
+
+        <button type="submit">Guardar Cambios</button>
+    </form>
+    <a href="{{ url_for('index') }}">Volver al inicio</a>
+</body>
+</html>
