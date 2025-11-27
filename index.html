@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mi Portfolio</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <h1>Mi Portfolio</h1>
+        <nav>
+            <a href="#acerca-de">Acerca de</a>
+            <a href="#experiencia">Experiencia</a>
+            <a href="#educacion">Educación</a>
+            <a href="#skills">Habilidades</a>
+            <a href="#proyectos">Proyectos</a>
+            {% if current_user.is_authenticated %}
+                <a href="{{ url_for('logout') }}" class="button button-delete">Cerrar Sesión</a>
+            {% else %}
+                <a href="{{ url_for('login') }}" class="button button-add">Iniciar Sesión</a>
+            {% endif %}
+        </nav>
+    </header>
+    <main>
+        <section id="banner" class="banner">
+            <img src="/static/img/foto_perfil.jpeg" alt="Foto de perfil" style="width: 150px; height: 150px; border-radius: 50%;">
+            <h2>{{ info_personal.nombre }} {{ info_personal.apellido }}</h2>
+            <p>{{ info_personal.titulo }}</p>
+        </section>
+        <section id="acerca-de" class="seccion">
+            <div class="section-header">
+                <h2>Acerca de mí</h2>
+                {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('editar_acerca_de', id=info_personal.id) }}" class="button button-edit">Editar</a>
+                {% endif %}
+            </div>
+            <p>{{ info_personal.descripcion }}</p>
+        </section>
+        <section id="experiencia" class="seccion">
+            <div class="section-header">
+                <h2>Experiencia</h2>
+                {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('agregar_experiencia') }}" class="button button-add">Agregar Experiencia</a>
+                {% endif %}
+            </div>
+            {% for exp in experiencia %}
+            <div class="experiencia-item">
+                <h3>{{ exp.puesto }}</h3>
+                <p><strong>Empresa:</strong> {{ exp.empresa }}</p>
+                <p><strong>Fecha:</strong> {{ exp.fecha_inicio }} - {{ exp.fecha_fin }}</p>
+                <p><strong>Descripción:</strong> {{ exp.descripcion }}</p>
+                {% if current_user.is_authenticated %}
+                <div class="item-buttons">
+                    <a href="{{ url_for('editar_experiencia', id=exp.id) }}" class="button button-edit">Editar</a>
+                    <a href="{{ url_for('borrar_experiencia', id=exp.id) }}" class="button button-delete">Borrar</a>
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </section>
+        <section id="educacion" class="seccion">
+            <div class="section-header">
+                <h2>Educación</h2>
+                {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('agregar_educacion') }}" class="button button-add">Agregar Educación</a>
+                {% endif %}
+            </div>
+            {% for edu in educacion %}
+            <div class="educacion-item">
+                <h3>{{ edu.titulo }}</h3>
+                <p><strong>Institución:</strong> {{ edu.institucion }}</p>
+                <p><strong>Fecha:</strong> {{ edu.fecha_inicio }} - {{ edu.fecha_fin }}</p>
+                {% if current_user.is_authenticated %}
+                <div class="item-buttons">
+                    <a href="{{ url_for('editar_educacion', id=edu.id) }}" class="button button-edit">Editar</a>
+                    <a href="{{ url_for('borrar_educacion', id=edu.id) }}" class="button button-delete">Borrar</a>
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </section>
+        <section id="skills" class="seccion">
+            <div class="section-header">
+                <h2>Habilidades</h2>
+                {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('agregar_habilidad') }}" class="button button-add">Agregar Habilidad</a>
+                {% endif %}
+            </div>
+            <div class="skills-container">
+                <div class="hard-skills">
+                    <h3>Habilidades duras</h3>
+                    <div class="skills-list">
+                        {% for skill in habilidades_duras %}
+                        <div class="skill-item">
+                            <p>{{ skill.nombre }}</p>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: {{ skill.nivel * 20 if skill.nivel else 0 }}%;"></div>
+                            </div>
+                            <span>{{ skill.nivel * 20 if skill.nivel else 0 }}%</span>
+                            {% if current_user.is_authenticated %}
+                            <div class="item-buttons">
+                                <a href="{{ url_for('editar_habilidad', id=skill.id) }}" class="button button-edit">Editar</a>
+                                <a href="{{ url_for('borrar_habilidad', id=skill.id) }}" class="button button-delete">Borrar</a>
+                            </div>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="soft-skills">
+                    <h3>Habilidades blandas</h3>
+                    <div class="skills-list">
+                        {% for skill in habilidades_blandas %}
+                        <div class="skill-item">
+                            <p>{{ skill.nombre }}</p>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: {{ skill.nivel * 20 if skill.nivel else 0 }}%;"></div>
+                            </div>
+                            <span>{{ skill.nivel * 20 if skill.nivel else 0 }}%</span>
+                            {% if current_user.is_authenticated %}
+                            <div class="item-buttons">
+                                <a href="{{ url_for('editar_habilidad', id=skill.id) }}" class="button button-edit">Editar</a>
+                                <a href="{{ url_for('borrar_habilidad', id=skill.id) }}" class="button button-delete">Borrar</a>
+                            </div>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="proyectos" class="seccion">
+            <div class="section-header">
+                <h2>Proyectos</h2>
+                {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('agregar_proyecto') }}" class="button button-add">Agregar Proyecto</a>
+                {% endif %}
+            </div>
+            {% for proyecto in proyectos %}
+            <div class="proyecto-item">
+                <h3>{{ proyecto.nombre }}</h3>
+                <p><strong>Descripción:</strong> {{ proyecto.descripcion }}</p>
+                <p><strong>Fecha:</strong> {{ proyecto.fecha }}</p>
+                <p><a href="{{ proyecto.enlace }}" target="_blank">Ver proyecto</a></p>
+                {% if current_user.is_authenticated %}
+                <div class="item-buttons">
+                    <a href="{{ url_for('editar_proyecto', id=proyecto.id) }}" class="button button-edit">Editar</a>
+                    <a href="{{ url_for('borrar_proyecto', id=proyecto.id) }}" class="button button-delete">Borrar</a>
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </section>
+    </main>
+    <footer>
+        <p>© 2025 Mi Portfolio</p>
+    </footer>
+</body>
+</html>

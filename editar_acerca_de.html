@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Editar Acerca de mí</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <h1>Editar Acerca de mí</h1>
+    <form method="POST" action="{{ url_for('editar_acerca_de', id=info_personal.id) }}">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" value="{{ info_personal.nombre }}" required><br><br>
+
+        <label for="apellido">Apellido:</label>
+        <input type="text" id="apellido" name="apellido" value="{{ info_personal.apellido }}" required><br><br>
+
+        <label for="titulo">Título:</label>
+        <input type="text" id="titulo" name="titulo" value="{{ info_personal.titulo }}" required><br><br>
+
+        <label for="descripcion">Descripción:</label>
+        <textarea id="descripcion" name="descripcion" required>{{ info_personal.descripcion }}</textarea><br><br>
+
+        <button type="submit">Guardar Cambios</button>
+    </form>
+    <a href="{{ url_for('index') }}" class="back-link">Volver al inicio</a>
+</body>
+</html>
